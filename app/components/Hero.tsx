@@ -1,11 +1,6 @@
 import clsx from 'clsx';
 import {MediaFile} from '@shopify/hydrogen';
-import type {
-  MediaImage,
-  Media,
-  Video as MediaVideo,
-} from '@shopify/hydrogen/storefront-api-types';
-
+import type {MediaImage, Media, Video as MediaVideo} from '@shopify/hydrogen/storefront-api-types';
 import type {CollectionContentFragment} from 'storefrontapi.generated';
 import {Heading, Text} from '~/components/Text';
 import {Link} from '~/components/Link';
@@ -17,7 +12,7 @@ type HeroProps = CollectionContentFragment & {
 };
 
 /**
- * Hero component that renders metafields attached to collection resources
+ * Hero component with improved visuals and CTA button
  **/
 export function Hero({
   byline,
@@ -34,14 +29,15 @@ export function Hero({
     <Link to={`/collections/${handle}`} prefetch="viewport">
       <section
         className={clsx(
-          'relative justify-end flex flex-col w-full',
+          'relative flex flex-col justify-end w-full overflow-hidden',
           top && '-mt-nav',
           height === 'full'
             ? 'h-screen'
-            : 'aspect-[4/5] sm:aspect-square md:aspect-[5/4] lg:aspect-[3/2] xl:aspect-[2/1]',
+            : 'aspect-[4/5] sm:aspect-square md:aspect-[5/4] lg:aspect-[3/2] xl:aspect-[2/1]'
         )}
       >
-        <div className="absolute inset-0 grid flex-grow grid-flow-col pointer-events-none auto-cols-fr -z-10 content-stretch overflow-clip">
+        {/* Background Media */}
+        <div className="absolute inset-0 grid flex-grow grid-flow-col auto-cols-fr pointer-events-none -z-10 overflow-clip content-stretch">
           {spread?.reference && (
             <div>
               <SpreadMedia
@@ -56,7 +52,7 @@ export function Hero({
             </div>
           )}
           {spreadSecondary?.reference && (
-            <div className="hidden md:block">
+            <div className="hidden sm:block md:block">
               <SpreadMedia
                 sizes="50vw"
                 data={spreadSecondary.reference as Media}
@@ -65,9 +61,11 @@ export function Hero({
             </div>
           )}
         </div>
-        <div className="flex flex-col items-baseline justify-between gap-4 px-6 py-8 sm:px-8 md:px-12 bg-gradient-to-t dark:from-contrast/60 dark:text-primary from-primary/60 text-contrast">
+
+        {/* Text & CTA */}
+        <div className="flex flex-col items-start justify-center gap-4 px-6 py-8 sm:px-8 md:px-12 bg-gradient-to-t from-primary/60 to-transparent text-contrast dark:from-contrast/60 dark:to-transparent dark:text-primary">
           {heading?.value && (
-            <Heading format as="h2" size="display" className="max-w-md">
+            <Heading format as="h2" size="display" className="max-w-md text-shadow-md">
               {heading.value}
             </Heading>
           )}
@@ -76,7 +74,14 @@ export function Hero({
               {byline.value}
             </Text>
           )}
-          {cta?.value && <Text size="lead">{cta.value}</Text>}
+          {cta?.value && (
+            <Link
+              to={`/collections/${handle}`}
+              className="inline-block px-6 py-3 mt-2 font-semibold text-contrast bg-primary rounded-md hover:bg-primary/90 transition-colors"
+            >
+              {cta.value}
+            </Link>
+          )}
         </div>
       </section>
     </Link>
@@ -107,7 +112,7 @@ function SpreadMedia({data, loading, sizes}: SpreadMediaProps) {
           loading,
           crop: 'center',
           sizes,
-          alt: data.alt || '',
+          alt: data.alt || 'Hero image',
         },
       }}
     />
