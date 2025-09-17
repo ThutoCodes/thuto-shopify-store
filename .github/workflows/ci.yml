@@ -11,7 +11,7 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v4
@@ -35,7 +35,7 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v4
@@ -66,7 +66,7 @@ jobs:
       SHOP_ID: ${{ secrets.SHOP_ID }}
     steps:
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: ⎔ Setup node
         uses: actions/setup-node@v4
@@ -96,7 +96,7 @@ jobs:
       cancel-in-progress: true
     steps:
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🧪 Run Playwright tests
         uses: ./.github/actions/end-to-end-tests'
